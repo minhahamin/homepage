@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
+  // Next.js 15에서는 appDir이 기본값이므로 experimental 설정 불필요
 }
 
 module.exports = nextConfig

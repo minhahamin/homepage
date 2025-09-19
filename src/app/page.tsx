@@ -1,8 +1,10 @@
 'use client'
 
+import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useLanguage } from '../contexts/LanguageContext'
 
 // 스크롤 애니메이션 컴포넌트
 const FadeInUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
@@ -39,6 +41,8 @@ const ScaleIn = ({ children, delay = 0 }: { children: React.ReactNode; delay?: n
 )
 
 export default function Home() {
+  const { language, setLanguage, t } = useLanguage()
+
   return (
     <main className="min-h-screen bg-black text-white">
       {/* 네비게이션 */}
@@ -47,14 +51,62 @@ export default function Home() {
           <div className="flex justify-between items-center h-16">
             <div className="text-2xl font-semibold">TechPro</div>
             <div className="hidden md:flex space-x-8">
-              <a href="#features" className="hover:text-gray-300 transition-colors">기능</a>
-              <a href="#specs" className="hover:text-gray-300 transition-colors">사양</a>
-              <a href="#gallery" className="hover:text-gray-300 transition-colors">갤러리</a>
-              <a href="#pricing" className="hover:text-gray-300 transition-colors">가격</a>
+              <a 
+                href="#features" 
+                className="hover:text-gray-300 transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('nav.features')}
+              </a>
+              <a 
+                href="#specs" 
+                className="hover:text-gray-300 transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('specs')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('nav.specs')}
+              </a>
+              <a 
+                href="#gallery" 
+                className="hover:text-gray-300 transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('nav.gallery')}
+              </a>
+              <a 
+                href="#pricing" 
+                className="hover:text-gray-300 transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('nav.pricing')}
+              </a>
             </div>
-            <Link href="/purchase" className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-full transition-colors">
-              구매하기
-            </Link>
+            <div className="flex items-center space-x-4">
+              {/* 언어 전환 버튼 */}
+              <button
+                onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}
+                className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+                title={language === 'ko' ? 'Switch to English' : '한국어로 전환'}
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
+              </button>
+              <Link href="/purchase" className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-full transition-colors">
+                {t('nav.buy')}
+              </Link>
+            </div>
           </div>
       </div>
       </nav>
@@ -64,21 +116,26 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <FadeInUp>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-              TechPro Max
+              {t('hero.title')}
           </h1>
           </FadeInUp>
           <FadeInUp delay={0.2}>
             <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              혁신적인 기술과 세련된 디자인이 만나 완성된 프리미엄 디바이스
+              {t('hero.subtitle')}
             </p>
           </FadeInUp>
           <FadeInUp delay={0.4}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/purchase" className="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-full text-lg font-semibold transition-colors text-center">
-                지금 구매하기
+                {t('hero.buy')}
               </Link>
-              <button className="border border-gray-600 hover:border-gray-400 px-8 py-4 rounded-full text-lg font-semibold transition-colors">
-                더 알아보기
+              <button 
+                className="border border-gray-600 hover:border-gray-400 px-8 py-4 rounded-full text-lg font-semibold transition-colors"
+                onClick={() => {
+                  document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('hero.learn')}
               </button>
             </div>
           </FadeInUp>
@@ -111,7 +168,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <FadeInUp>
             <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16">
-              혁신적인 기능들
+              {t('features.title')}
           </h2>
           </FadeInUp>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -120,9 +177,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">⚡</span>
                 </div>
-                <h3 className="text-2xl font-semibold mb-4">초고속 성능</h3>
+                <h3 className="text-2xl font-semibold mb-4">{t('features.performance.title')}</h3>
                 <p className="text-gray-300">
-                  최신 프로세서로 모든 작업을 빠르고 효율적으로 처리합니다.
+                  {t('features.performance.desc')}
                 </p>
               </div>
             </FadeInUp>
@@ -131,10 +188,11 @@ export default function Home() {
                 <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">🔋</span>
                 </div>
-                <h3 className="text-2xl font-semibold mb-4">장시간 배터리</h3>
-                <p className="text-gray-300">
-                  하루 종일 사용할 수 있는 강력한 배터리 성능을 제공합니다.
-                </p>
+                <h3 className="text-2xl font-semibold mb-4">AI 기능</h3>
+                <p 
+                  className="text-gray-300"
+                  dangerouslySetInnerHTML={{ __html: t('features.ai.desc') }}
+                />
               </div>
             </FadeInUp>
             <FadeInUp delay={0.3}>
@@ -142,9 +200,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">📷</span>
                 </div>
-                <h3 className="text-2xl font-semibold mb-4">프로급 카메라</h3>
+                <h3 className="text-2xl font-semibold mb-4">{t('features.camera.title')}</h3>
                 <p className="text-gray-300">
-                  전문가 수준의 사진과 동영상을 촬영할 수 있습니다.
+                  {t('features.camera.desc')}
                 </p>
               </div>
             </FadeInUp>
@@ -157,79 +215,79 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <FadeInUp>
             <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16">
-              기술 사양
+              {t('specs.title')}
           </h2>
           </FadeInUp>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <FadeInUp delay={0.1}>
               <div>
-                <h3 className="text-2xl font-semibold mb-8">디스플레이 & 크기</h3>
+                <h3 className="text-2xl font-semibold mb-8">{t('specs.display')} & {t('specs.dimensions')}</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">화면 크기</span>
-                    <span>17.4cm (6.9인치)</span>
+                    <span className="text-gray-300">{t('specs.display.size')}</span>
+                    <span>{t('specs.display.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">가로</span>
-                    <span>78mm</span>
+                    <span className="text-gray-300">{t('specs.dimensions.width')}</span>
+                    <span>{t('specs.dimensions.width.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">세로</span>
-                    <span>163.4mm</span>
+                    <span className="text-gray-300">{t('specs.dimensions.height')}</span>
+                    <span>{t('specs.dimensions.height.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">두께</span>
-                    <span>8.75mm</span>
+                    <span className="text-gray-300">{t('specs.dimensions.thickness')}</span>
+                    <span>{t('specs.dimensions.thickness.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">무게</span>
-                    <span>231g</span>
+                    <span className="text-gray-300">{t('specs.dimensions.weight')}</span>
+                    <span>{t('specs.dimensions.weight.value')}</span>
                   </div>
                 </div>
               </div>
             </FadeInUp>
             <FadeInUp delay={0.2}>
               <div>
-                <h3 className="text-2xl font-semibold mb-8">성능 & 저장</h3>
+                <h3 className="text-2xl font-semibold mb-8">{t('specs.performance.title')}</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">프로세서</span>
-                    <span>A19 Pro</span>
+                    <span className="text-gray-300">{t('specs.processor')}</span>
+                    <span>{t('specs.processor.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">저장공간</span>
-                    <span>256GB</span>
+                    <span className="text-gray-300">{t('specs.storage')}</span>
+                    <span>{t('specs.storage.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">통신</span>
-                    <span>5G</span>
+                    <span className="text-gray-300">{t('specs.communication')}</span>
+                    <span>{t('specs.communication.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">방수</span>
-                    <span>IP68</span>
+                    <span className="text-gray-300">{t('specs.waterproof')}</span>
+                    <span>{t('specs.waterproof.value')}</span>
                   </div>
                 </div>
               </div>
             </FadeInUp>
             <FadeInUp delay={0.3}>
               <div>
-                <h3 className="text-2xl font-semibold mb-8">카메라 & 배터리</h3>
+                <h3 className="text-2xl font-semibold mb-8">{t('specs.camera.title')}</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">후면 카메라</span>
-                    <span>4,800만화소 × 3</span>
+                    <span className="text-gray-300">{t('specs.camera.rear')}</span>
+                    <span>{t('specs.camera.rear.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">전면 카메라</span>
-                    <span>1,800만화소</span>
+                    <span className="text-gray-300">{t('specs.camera.front')}</span>
+                    <span>{t('specs.camera.front.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">충전</span>
-                    <span>USB3.2</span>
+                    <span className="text-gray-300">{t('specs.charging')}</span>
+                    <span>{t('specs.charging.value')}</span>
                   </div>
                   <div className="flex justify-between py-3 border-b border-gray-800">
-                    <span className="text-gray-300">맥세이프</span>
-                    <span>최대 25W</span>
+                    <span className="text-gray-300">{t('specs.magsafe')}</span>
+                    <span>{t('specs.magsafe.value')}</span>
                   </div>
                 </div>
               </div>
@@ -239,39 +297,39 @@ export default function Home() {
           {/* AI 기능 섹션 */}
           <FadeInUp delay={0.4}>
             <div className="mt-16">
-              <h3 className="text-2xl font-semibold mb-8 text-center">AI 기능</h3>
+              <h3 className="text-2xl font-semibold mb-8 text-center">{t('features.ai.section.title')}</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">📝</div>
-                  <p className="text-sm text-gray-300">요약</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.summary')}</p>
                 </div>
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">✏️</div>
-                  <p className="text-sm text-gray-300">편집</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.edit')}</p>
                 </div>
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">🔍</div>
-                  <p className="text-sm text-gray-300">교정</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.correction')}</p>
                 </div>
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">🎨</div>
-                  <p className="text-sm text-gray-300">이미지 생성</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.imagegen')}</p>
                 </div>
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">🖼️</div>
-                  <p className="text-sm text-gray-300">이미지 편집</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.imageedit')}</p>
                 </div>
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">🌐</div>
-                  <p className="text-sm text-gray-300">실시간 통역</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.translation')}</p>
                 </div>
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">🎤</div>
-                  <p className="text-sm text-gray-300">음성비서</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.voice')}</p>
                 </div>
                 <div className="text-center p-4 bg-gray-800 rounded-lg">
                   <div className="text-3xl mb-2">🤖</div>
-                  <p className="text-sm text-gray-300">AI 프로세서</p>
+                  <p className="text-sm text-gray-300">{t('specs.ai.processor')}</p>
                 </div>
               </div>
             </div>
@@ -284,38 +342,62 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <FadeInUp>
             <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16">
-              갤러리
+              {t('gallery.title')}
           </h2>
           </FadeInUp>
 
           {/* 제품 갤러리 */}
           <FadeInUp delay={0.1}>
             <div className="mb-16">
-              <h3 className="text-2xl font-semibold mb-8 text-center">제품 갤러리</h3>
+              <h3 className="text-2xl font-semibold mb-8 text-center">{t('gallery.product.title')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="bg-gray-800 rounded-2xl p-6 text-center">
-                  <div className="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="w-16 h-24 bg-gradient-to-b from-gray-600 to-gray-700 rounded-lg"></div>
+                  <div className="w-full h-64 rounded-xl mb-4 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-front.png"
+                      alt="TechPro 정면 뷰"
+                      width={200}
+                      height={300}
+                      className="object-contain"
+                    />
                   </div>
-                  <p className="text-sm text-gray-300">정면 뷰</p>
+                  <p className="text-sm text-gray-300">{t('gallery.product.front')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6 text-center">
-                  <div className="w-full h-48 bg-gradient-to-br from-orange-600 to-orange-800 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="w-16 h-24 bg-gradient-to-b from-orange-500 to-orange-700 rounded-lg"></div>
+                  <div className="w-full h-64 rounded-xl mb-4 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-orange.png"
+                      alt="TechPro 오렌지 컬러"
+                      width={200}
+                      height={300}
+                      className="object-contain"
+                    />
                   </div>
-                  <p className="text-sm text-gray-300">오렌지 컬러</p>
+                  <p className="text-sm text-gray-300">{t('gallery.product.orange')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6 text-center">
-                  <div className="w-full h-48 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="w-16 h-24 bg-gradient-to-b from-blue-500 to-blue-700 rounded-lg"></div>
+                  <div className="w-full h-64 rounded-xl mb-4 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-blue.png"
+                      alt="TechPro 블루 컬러"
+                      width={200}
+                      height={300}
+                      className="object-contain"
+                    />
                   </div>
-                  <p className="text-sm text-gray-300">다크 블루</p>
+                  <p className="text-sm text-gray-300">{t('gallery.product.darkblue')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6 text-center">
-                  <div className="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-400 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="w-16 h-24 bg-gradient-to-b from-gray-100 to-gray-300 rounded-lg"></div>
+                  <div className="w-full h-64 rounded-xl mb-4 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-white.png"
+                      alt="TechPro 화이트 컬러"
+                      width={200}
+                      height={300}
+                      className="object-contain"
+                    />
                   </div>
-                  <p className="text-sm text-gray-300">화이트 컬러</p>
+                  <p className="text-sm text-gray-300">{t('gallery.product.white')}</p>
                 </div>
               </div>
             </div>
@@ -324,28 +406,45 @@ export default function Home() {
           {/* AI 기능 데모 */}
           <FadeInUp delay={0.2}>
             <div className="mb-16">
-              <h3 className="text-2xl font-semibold mb-8 text-center">AI 기능 데모</h3>
+              <h3 className="text-2xl font-semibold mb-8 text-center">{t('gallery.ai.title')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-gray-800 rounded-2xl p-6">
-                  <div className="w-full h-32 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl mb-4 flex items-center justify-center">
-                    <span className="text-4xl">🌐</span>
+                  <div className="w-full h-32 rounded-xl mb-4 relative overflow-hidden">
+                    <Image
+                      src="/tech-bunyeok.png"
+                      alt="실시간 통역"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold mb-2">실시간 통역</h4>
-                  <p className="text-sm text-gray-300">다국어 실시간 번역 기능</p>
+                  <h4 className="text-lg font-semibold mb-2">{t('gallery.ai.translation')}</h4>
+                  <p className="text-sm text-gray-300">{t('gallery.ai.translation.desc')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6">
-                  <div className="w-full h-32 bg-gradient-to-r from-green-600 to-blue-600 rounded-xl mb-4 flex items-center justify-center">
-                    <span className="text-4xl">🎨</span>
+                  <div className="w-full h-32 rounded-xl mb-4 relative overflow-hidden">
+                    <Image
+                      src="/tech-ai-img.jpg"
+                      alt="이미지 생성"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold mb-2">이미지 생성</h4>
-                  <p className="text-sm text-gray-300">AI로 생성한 이미지들</p>
+                  <h4 className="text-lg font-semibold mb-2">{t('gallery.ai.imagegen')}</h4>
+                  <p className="text-sm text-gray-300">{t('gallery.ai.imagegen.desc')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6">
-                  <div className="w-full h-32 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-xl mb-4 flex items-center justify-center">
-                    <span className="text-4xl">🎤</span>
+                  <div className="w-full h-32 rounded-xl mb-4 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-siri.png"
+                      alt="음성비서"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto h-auto max-w-full max-h-full object-contain"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold mb-2">음성비서</h4>
-                  <p className="text-sm text-gray-300">스마트 음성 어시스턴트</p>
+                  <h4 className="text-lg font-semibold mb-2">{t('gallery.ai.voice')}</h4>
+                  <p className="text-sm text-gray-300">{t('gallery.ai.voice.desc')}</p>
                 </div>
               </div>
             </div>
@@ -354,34 +453,62 @@ export default function Home() {
           {/* 카메라 샘플 */}
           <FadeInUp delay={0.3}>
             <div className="mb-16">
-              <h3 className="text-2xl font-semibold mb-8 text-center">카메라 샘플</h3>
+              <h3 className="text-2xl font-semibold mb-8 text-center">{t('gallery.camera.title')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="bg-gray-800 rounded-2xl overflow-hidden">
-                  <div className="w-full h-48 bg-gradient-to-br from-sky-400 to-blue-600"></div>
+                  <div className="w-full h-48 relative">
+                    <Image
+                      src="/tech-pungkung.jpg"
+                      alt="풍경 사진"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="p-4">
-                    <p className="text-sm text-gray-300">풍경 사진</p>
-                    <p className="text-xs text-gray-500">4,800만화소</p>
+                    <p className="text-sm text-gray-300">{t('gallery.camera.landscape')}</p>
+                    <p className="text-xs text-gray-500">{t('gallery.camera.landscape.desc')}</p>
                   </div>
                 </div>
                 <div className="bg-gray-800 rounded-2xl overflow-hidden">
-                  <div className="w-full h-48 bg-gradient-to-br from-pink-400 to-red-600"></div>
+                  <div className="w-full h-48 relative">
+                    <Image
+                      src="/tech-ai.png"
+                      alt="AI 인물 사진"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="p-4">
-                    <p className="text-sm text-gray-300">인물 사진</p>
-                    <p className="text-xs text-gray-500">AI 인물 모드</p>
+                    <p className="text-sm text-gray-300">{t('gallery.camera.portrait')}</p>
+                    <p className="text-xs text-gray-500">{t('gallery.camera.portrait.desc')}</p>
                   </div>
                 </div>
                 <div className="bg-gray-800 rounded-2xl overflow-hidden">
-                  <div className="w-full h-48 bg-gradient-to-br from-green-400 to-emerald-600"></div>
+                  <div className="w-full h-48 relative">
+                    <Image
+                      src="/tech-yagan.jpeg"
+                      alt="야간 촬영"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="p-4">
-                    <p className="text-sm text-gray-300">야간 촬영</p>
-                    <p className="text-xs text-gray-500">야간 모드</p>
+                    <p className="text-sm text-gray-300">{t('gallery.camera.night')}</p>
+                    <p className="text-xs text-gray-500">{t('gallery.camera.night.desc')}</p>
                   </div>
                 </div>
                 <div className="bg-gray-800 rounded-2xl overflow-hidden">
-                  <div className="w-full h-48 bg-gradient-to-br from-purple-400 to-violet-600"></div>
+                  <div className="w-full h-48 relative">
+                    <Image
+                      src="/tech-macro.png"
+                      alt="매크로 촬영"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="p-4">
-                    <p className="text-sm text-gray-300">매크로 촬영</p>
-                    <p className="text-xs text-gray-500">초근접 촬영</p>
+                    <p className="text-sm text-gray-300">{t('gallery.camera.macro')}</p>
+                    <p className="text-xs text-gray-500">{t('gallery.camera.macro.desc')}</p>
                   </div>
                 </div>
               </div>
@@ -391,28 +518,43 @@ export default function Home() {
           {/* 사용자 경험 */}
           <FadeInUp delay={0.4}>
             <div className="mb-16">
-              <h3 className="text-2xl font-semibold mb-8 text-center">사용자 경험</h3>
+              <h3 className="text-2xl font-semibold mb-8 text-center">{t('gallery.ux.title')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-gray-800 rounded-2xl p-6">
-                  <div className="w-full h-40 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="w-20 h-32 bg-gradient-to-b from-gray-600 to-gray-800 rounded-lg"></div>
+                  <div className="w-full h-40 rounded-xl mb-4 relative overflow-hidden">
+                    <Image
+                      src="/tech-homeview.png"
+                      alt="홈 화면"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold mb-2">홈 화면</h4>
-                  <p className="text-sm text-gray-300">직관적인 사용자 인터페이스</p>
+                  <h4 className="text-lg font-semibold mb-2">{t('gallery.ux.home')}</h4>
+                  <p className="text-sm text-gray-300">{t('gallery.ux.home.desc')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6">
-                  <div className="w-full h-40 bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="w-20 h-32 bg-gradient-to-b from-blue-600 to-blue-800 rounded-lg"></div>
+                  <div className="w-full h-40 rounded-xl mb-4 relative overflow-hidden">
+                    <Image
+                      src="/tech-multitasking.png"
+                      alt="멀티태스킹"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold mb-2">멀티태스킹</h4>
-                  <p className="text-sm text-gray-300">효율적인 작업 관리</p>
+                  <h4 className="text-lg font-semibold mb-2">{t('gallery.ux.multitask')}</h4>
+                  <p className="text-sm text-gray-300">{t('gallery.ux.multitask.desc')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6">
-                  <div className="w-full h-40 bg-gradient-to-br from-green-700 to-green-900 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="w-20 h-32 bg-gradient-to-b from-green-600 to-green-800 rounded-lg"></div>
+                  <div className="w-full h-40 rounded-xl mb-4 relative overflow-hidden">
+                    <Image
+                      src="/tech-gameplay.png"
+                      alt="게임 플레이"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold mb-2">게임 플레이</h4>
-                  <p className="text-sm text-gray-300">부드러운 게임 경험</p>
+                  <h4 className="text-lg font-semibold mb-2">{t('gallery.ux.gaming')}</h4>
+                  <p className="text-sm text-gray-300">{t('gallery.ux.gaming.desc')}</p>
                 </div>
               </div>
             </div>
@@ -421,31 +563,59 @@ export default function Home() {
           {/* 디테일 갤러리 */}
           <FadeInUp delay={0.5}>
             <div>
-              <h3 className="text-2xl font-semibold mb-8 text-center">디테일 갤러리</h3>
+              <h3 className="text-2xl font-semibold mb-8 text-center">{t('gallery.detail.title')}</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-gray-800 rounded-xl p-4 text-center">
-                  <div className="w-full h-24 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg mb-3 flex items-center justify-center">
-                    <div className="w-8 h-8 bg-gray-500 rounded"></div>
+                  <div className="w-full h-24 rounded-lg mb-3 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-camera-module.png"
+                      alt="카메라 모듈"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto h-auto max-w-full max-h-full object-contain"
+                    />
                   </div>
-                  <p className="text-xs text-gray-300">카메라 모듈</p>
+                  <p className="text-xs text-gray-300">{t('gallery.detail.camera')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-xl p-4 text-center">
-                  <div className="w-full h-24 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg mb-3 flex items-center justify-center">
-                    <div className="w-8 h-2 bg-gray-500 rounded"></div>
+                  <div className="w-full h-24 rounded-lg mb-3 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-sidebutton.png"
+                      alt="사이드 버튼"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto h-auto max-w-full max-h-full object-contain"
+                    />
                   </div>
-                  <p className="text-xs text-gray-300">사이드 버튼</p>
+                  <p className="text-xs text-gray-300">{t('gallery.detail.buttons')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-xl p-4 text-center">
-                  <div className="w-full h-24 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg mb-3 flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-500 rounded-full"></div>
+                  <div className="w-full h-24 rounded-lg mb-3 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-charge-port.png"
+                      alt="충전 포트"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto h-auto max-w-full max-h-full object-contain"
+                    />
                   </div>
-                  <p className="text-xs text-gray-300">충전 포트</p>
+                  <p className="text-xs text-gray-300">{t('gallery.detail.port')}</p>
                 </div>
                 <div className="bg-gray-800 rounded-xl p-4 text-center">
-                  <div className="w-full h-24 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg mb-3 flex items-center justify-center">
-                    <div className="w-4 h-4 bg-gray-500 rounded"></div>
+                  <div className="w-full h-24 rounded-lg mb-3 flex items-center justify-center bg-gray-700">
+                    <Image
+                      src="/tech-speaker.png"
+                      alt="스피커 그릴"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto h-auto max-w-full max-h-full object-contain"
+                    />
                   </div>
-                  <p className="text-xs text-gray-300">스피커 그릴</p>
+                  <p className="text-xs text-gray-300">{t('gallery.detail.speaker')}</p>
                 </div>
               </div>
             </div>
@@ -458,54 +628,54 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <FadeInUp>
             <h2 className="text-4xl sm:text-5xl font-bold mb-16">
-              가격
+              {t('pricing.title')}
           </h2>
           </FadeInUp>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FadeInUp delay={0.1}>
               <div className="bg-gray-800 rounded-2xl p-8">
-                <h3 className="text-2xl font-semibold mb-4">TechPro</h3>
-                <div className="text-4xl font-bold mb-6">₩1,200,000</div>
+                <h3 className="text-2xl font-semibold mb-4">{t('footer.techpro')}</h3>
+                <div className="text-4xl font-bold mb-6">{t('pricing.techpro.price')}</div>
                 <ul className="space-y-3 text-gray-300 mb-8">
-                  <li>128GB 저장공간</li>
-                  <li>6.1인치 디스플레이</li>
-                  <li>기본 카메라</li>
+                  <li>{t('pricing.storage.128')}</li>
+                  <li>{t('pricing.display.6.1')}</li>
+                  <li>{t('pricing.camera.basic')}</li>
                 </ul>
                 <Link href="/purchase" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
-                  선택하기
+                  {t('pricing.select')}
                 </Link>
               </div>
             </FadeInUp>
             <FadeInUp delay={0.2}>
               <div className="bg-gray-800 rounded-2xl p-8 border-2 border-blue-600 relative">
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm">
-                  인기
+                  {t('pricing.popular')}
                 </div>
-                <h3 className="text-2xl font-semibold mb-4">TechPro Max</h3>
-                <div className="text-4xl font-bold mb-6">₩1,990,000</div>
+                <h3 className="text-2xl font-semibold mb-4">{t('footer.techpromax')}</h3>
+                <div className="text-4xl font-bold mb-6">{t('pricing.techpromax.price')}</div>
                 <ul className="space-y-3 text-gray-300 mb-8">
-                  <li>256GB 저장공간</li>
-                  <li>6.9인치 디스플레이</li>
-                  <li>4,800만화소 카메라 × 3</li>
-                  <li>A19 Pro 프로세서</li>
-                  <li>AI 기능 내장</li>
+                  <li>{t('pricing.storage.256')}</li>
+                  <li>{t('pricing.display.6.9')}</li>
+                  <li>{t('pricing.camera.48mp')}</li>
+                  <li>{t('pricing.processor.a19')}</li>
+                  <li>{t('pricing.ai.builtin')}</li>
                 </ul>
                 <Link href="/purchase" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
-                  선택하기
+                  {t('pricing.select')}
                 </Link>
               </div>
             </FadeInUp>
             <FadeInUp delay={0.3}>
               <div className="bg-gray-800 rounded-2xl p-8">
-                <h3 className="text-2xl font-semibold mb-4">TechPro Ultra</h3>
-                <div className="text-4xl font-bold mb-6">₩1,800,000</div>
+                <h3 className="text-2xl font-semibold mb-4">{t('footer.techproultra')}</h3>
+                <div className="text-4xl font-bold mb-6">{t('pricing.techproultra.price')}</div>
                 <ul className="space-y-3 text-gray-300 mb-8">
-                  <li>512GB 저장공간</li>
-                  <li>6.7인치 디스플레이</li>
-                  <li>울트라 카메라</li>
+                  <li>{t('pricing.storage.512')}</li>
+                  <li>{t('pricing.display.6.7')}</li>
+                  <li>{t('pricing.camera.ultra')}</li>
                 </ul>
                 <Link href="/purchase" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
-                  선택하기
+                  {t('pricing.select')}
                 </Link>
               </div>
             </FadeInUp>
@@ -521,38 +691,38 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-semibold mb-4">TechPro</h3>
                 <p className="text-gray-400">
-                  혁신적인 기술로 만든 프리미엄 디바이스
+                  {t('footer.subtitle')}
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold mb-4">제품</h4>
+                <h4 className="font-semibold mb-4">{t('footer.product')}</h4>
                 <ul className="space-y-2 text-gray-400">
-                  <li>TechPro</li>
-                  <li>TechPro Max</li>
-                  <li>TechPro Ultra</li>
+                  <li>{t('footer.techpro')}</li>
+                  <li>{t('footer.techpromax')}</li>
+                  <li>{t('footer.techproultra')}</li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-4">지원</h4>
+                <h4 className="font-semibold mb-4">{t('footer.support')}</h4>
                 <ul className="space-y-2 text-gray-400">
-                  <li>고객지원</li>
-                  <li>수리서비스</li>
-                  <li>보증</li>
+                  <li>{t('footer.customer')}</li>
+                  <li>{t('footer.repair')}</li>
+                  <li>{t('footer.warranty')}</li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-4">회사</h4>
+                <h4 className="font-semibold mb-4">{t('footer.company_info')}</h4>
                 <ul className="space-y-2 text-gray-400">
-                  <li>회사소개</li>
-                  <li>채용정보</li>
-                  <li>뉴스</li>
+                  <li>{t('footer.about')}</li>
+                  <li>{t('footer.careers')}</li>
+                  <li>{t('footer.news')}</li>
                 </ul>
               </div>
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
             <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-              <p>&copy; 2024 TechPro. All rights reserved.</p>
+              <p>&copy; 2024 {t('footer.company')}. {t('footer.rights')}</p>
             </div>
           </FadeIn>
         </div>
