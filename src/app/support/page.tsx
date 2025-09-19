@@ -39,7 +39,7 @@ export default function Support() {
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="text-2xl font-semibold">TechPro</Link>
             <div className="hidden md:flex space-x-8">
-              <a 
+              <Link 
                 href="/#features" 
                 className="hover:text-gray-300 transition-colors cursor-pointer"
                 onClick={(e) => {
@@ -51,8 +51,8 @@ export default function Support() {
                 }}
               >
                 {t('nav.features')}
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="/#specs" 
                 className="hover:text-gray-300 transition-colors cursor-pointer"
                 onClick={(e) => {
@@ -64,8 +64,8 @@ export default function Support() {
                 }}
               >
                 {t('nav.specs')}
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="/#gallery" 
                 className="hover:text-gray-300 transition-colors cursor-pointer"
                 onClick={(e) => {
@@ -77,8 +77,8 @@ export default function Support() {
                 }}
               >
                 {t('nav.gallery')}
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="/#pricing" 
                 className="hover:text-gray-300 transition-colors cursor-pointer"
                 onClick={(e) => {
@@ -90,7 +90,7 @@ export default function Support() {
                 }}
               >
                 {t('nav.pricing')}
-              </a>
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               {/* 언어 전환 버튼 */}
