@@ -228,7 +228,24 @@ const translations = {
     'footer.about': '회사소개',
     'footer.careers': '채용정보',
     'footer.news': '뉴스',
-    'footer.purchase': '안전한 결제와 빠른 배송을 약속드립니다.'
+    'footer.purchase': '안전한 결제와 빠른 배송을 약속드립니다.',
+    
+    // 결제 완료 페이지
+    'success.title': '주문 완료!',
+    'success.subtitle': '주문이 성공적으로 완료되었습니다.',
+    'success.order.info': '주문 정보',
+    'success.order.number': '주문번호',
+    'success.order.product': '제품',
+    'success.order.price': '결제 금액',
+    'success.order.payment': '결제 방법',
+    'success.order.name': '이름',
+    'success.order.phone': '연락처',
+    'success.shipping': '배송 안내',
+    'success.shipping.1': '영업일 기준 2-3일 내 배송됩니다.',
+    'success.shipping.2': '배송 조회는 마이페이지에서 확인하실 수 있습니다.',
+    'success.shipping.3': '문의사항은 고객센터로 연락해주세요.',
+    'success.home': '홈으로 돌아가기',
+    'success.support': '고객 지원'
   },
   en: {
     // 네비게이션
@@ -444,7 +461,24 @@ const translations = {
     'footer.about': 'About Us',
     'footer.careers': 'Careers',
     'footer.news': 'News',
-    'footer.purchase': 'We promise secure payment and fast delivery.'
+    'footer.purchase': 'We promise secure payment and fast delivery.',
+    
+    // 결제 완료 페이지
+    'success.title': 'Order Complete!',
+    'success.subtitle': 'Your order has been successfully completed.',
+    'success.order.info': 'Order Information',
+    'success.order.number': 'Order Number',
+    'success.order.product': 'Product',
+    'success.order.price': 'Payment Amount',
+    'success.order.payment': 'Payment Method',
+    'success.order.name': 'Name',
+    'success.order.phone': 'Phone',
+    'success.shipping': 'Shipping Information',
+    'success.shipping.1': 'Delivery within 2-3 business days.',
+    'success.shipping.2': 'You can track your order in My Page.',
+    'success.shipping.3': 'For inquiries, please contact customer service.',
+    'success.home': 'Back to Home',
+    'success.support': 'Customer Support'
   }
 }
 

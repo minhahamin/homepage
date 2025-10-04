@@ -641,7 +641,7 @@ export default function Home() {
                   <li>{t('pricing.display.6.1')}</li>
                   <li>{t('pricing.camera.basic')}</li>
                 </ul>
-                <Link href="/purchase" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
+                <Link href="/purchase?product=techpro" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
                   {t('pricing.select')}
                 </Link>
               </div>
@@ -660,7 +660,7 @@ export default function Home() {
                   <li>{t('pricing.processor.a19')}</li>
                   <li>{t('pricing.ai.builtin')}</li>
                 </ul>
-                <Link href="/purchase" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
+                <Link href="/purchase?product=techpromax" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
                   {t('pricing.select')}
                 </Link>
               </div>
@@ -674,7 +674,7 @@ export default function Home() {
                   <li>{t('pricing.display.6.7')}</li>
                   <li>{t('pricing.camera.ultra')}</li>
                 </ul>
-                <Link href="/purchase" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
+                <Link href="/purchase?product=techproultra" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-full transition-colors text-center block">
                   {t('pricing.select')}
                 </Link>
               </div>
